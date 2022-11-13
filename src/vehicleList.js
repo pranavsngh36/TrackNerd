@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDatabase, ref, child, get } from "firebase/database";
+import ExampleModal from "./ExampleModal";
 import app from "./firebase";
 
 export default function VehicleList({ userDetail }) {
@@ -36,8 +37,8 @@ export default function VehicleList({ userDetail }) {
     fetch(" https://staging-api.tracknerd.io/v1/vehicle-groups/vehicles", {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then(({ data }) => {
@@ -66,9 +67,7 @@ export default function VehicleList({ userDetail }) {
                   }}
                 >
                   {name}
-                  <span className="badge bg-primary rounded-pill">
-                    {vehicles.length}
-                  </span>
+                  <ExampleModal vehicles={vehicles} />
                 </li>
               );
             })

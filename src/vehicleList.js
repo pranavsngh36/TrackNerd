@@ -6,10 +6,8 @@ import app from "./firebase";
 export default function VehicleList({ userDetail }) {
   const { token } = userDetail;
   const [vehicles, setVehicles] = useState(null);
-
-  const showInMapClicked = (lat, log) => {
-    window.open(`https://www.google.com/maps/@${lat},${log},15z`);
-  };
+  const [lat, setLat] = useState(null);
+  const [long, setLong] = useState(null);
 
   useEffect(() => {
     getVehicleList();
@@ -23,7 +21,8 @@ export default function VehicleList({ userDetail }) {
         if (snapshot.exists()) {
           console.log(snapshot.val());
           const { latitude, longitude } = snapshot.val();
-          showInMapClicked(latitude, longitude);
+          setLong(longitude);
+          setLat(latitude);
         } else {
           alert("No data available");
         }
@@ -67,7 +66,7 @@ export default function VehicleList({ userDetail }) {
                   }}
                 >
                   {name}
-                  <ExampleModal vehicles={vehicles} />
+                  <ExampleModal vehicles={vehicles} lat={lat} long={long} />
                 </li>
               );
             })
